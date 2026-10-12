@@ -1,0 +1,22 @@
+{
+  "test_name": "TCP Echo Server Load Benchmark",
+  "concurrency": 16,
+  "requests_per_client": 250,
+  "payload_size_bytes": 128,
+  "total_requests": 4000,
+  "successful_requests": 4000,
+  "failed_requests": 0,
+  "bytes_transferred": 1056000,
+  "duration_ms": 266.07,
+  "requests_per_second": 15033.86,
+  "throughput_mbps": 31.75,
+  "request_latency_us": {
+    "min": 101.00,
+    "mean": 1033.79,
+    "p50": 893.00,
+    "p90": 1390.00,
+    "p95": 1968.00,
+    "p99": 6245.00,
+    "max": 12809.00
+  }
+}
