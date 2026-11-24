@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: CMake (${{ matrix.config.name }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: Release
+            cmake_args: -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON
+          - name: ASan + UBSan
+            cmake_args: -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON -DENABLE_ASAN_UBSAN=ON
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -B build ${{ matrix.config.cmake_args }}
+
+      - name: Build
+        run: cmake --build build -j$(nproc)
+
+      - name: Run CTest suite
+        working-directory: build
+        run: ctest --output-on-failure --verbose
